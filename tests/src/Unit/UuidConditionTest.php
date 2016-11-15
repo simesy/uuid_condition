@@ -74,7 +74,7 @@ class UuidConditionTest extends UnitTestCase {
   public function evaluateAlwaysTrueWithNoContext() {
     // Set some config to ensure the context is checked.
     $mock_config = $this->getConfigTemplateStub();
-    $mock_config['uuid'] = self::MOCK_UUID;
+    $mock_config['uuids'] = self::MOCK_UUID;
 
     $this->plugin->setConfiguration($mock_config);
     $this->assertEquals(FALSE, $this->plugin->evaluate(), 'Plugin evaluated with no context should always evaluate to FALSE');
@@ -112,7 +112,7 @@ class UuidConditionTest extends UnitTestCase {
 
     $mock_config = $this->getConfigTemplateStub();
     foreach ($mock_uuid_configs as $message => $config) {
-      $mock_config['uuid'] = $config;
+      $mock_config['uuids'] = $config;
       $this->plugin->setConfiguration($mock_config);
       // Test without a context with no uuid config.
       $this->assertEquals(TRUE, $this->plugin->evaluate(), "Plugin should evaluate to TRUE when valid uuid is $message.");
@@ -142,7 +142,7 @@ class UuidConditionTest extends UnitTestCase {
 
     // Mock config.
     $mock_config = $this->getConfigTemplateStub();
-    $mock_config['uuid'] = $mock_config_uuid;
+    $mock_config['uuids'] = $mock_config_uuid;
     $this->plugin->setConfiguration($mock_config);
 
     $this->assertEquals(FALSE, $this->plugin->evaluate(), "Plugin should evaluate to FALSE when the context uuid does not match config.");
@@ -158,7 +158,7 @@ class UuidConditionTest extends UnitTestCase {
     return array(
       'id' => 'uuid',
       'negate' => FALSE,
-      'uuid' => '',
+      'uuids' => '',
       'context_mapping' => array(
         'node' => '@node.node_route_context:node',
       ),

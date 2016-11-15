@@ -31,17 +31,17 @@ class UuidCondition extends ConditionPluginBase {
    * {@inheritdoc}
    */
   public function defaultConfiguration() {
-    return array('uuid' => '') + parent::defaultConfiguration();
+    return array('uuids' => '') + parent::defaultConfiguration();
   }
 
   /**
    * {@inheritdoc}
    */
   public function buildConfigurationForm(array $form, FormStateInterface $form_state) {
-    $form['uuid'] = array(
+    $form['uuids'] = array(
       '#title' => $this->t('Entity UUIDs, one per line'),
       '#type' => 'textarea',
-      '#default_value' => $this->configuration['uuid'],
+      '#default_value' => $this->configuration['uuids'],
     );
     return parent::buildConfigurationForm($form, $form_state);
   }
@@ -50,7 +50,7 @@ class UuidCondition extends ConditionPluginBase {
    * {@inheritdoc}
    */
   public function submitConfigurationForm(array &$form, FormStateInterface $form_state) {
-    $this->configuration['uuid'] = $form_state->getValue('uuid');
+    $this->configuration['uuids'] = $form_state->getValue('uuids');
     parent::submitConfigurationForm($form, $form_state);
   }
 
@@ -58,15 +58,15 @@ class UuidCondition extends ConditionPluginBase {
    * {@inheritdoc}
    */
   public function summary() {
-    $uuid = $this->configuration['uuid'];
-    return $this->t('The entity id configuration is @uuid', array('@uuid' => $uuid));
+    $uuids = $this->configuration['uuids'];
+    return $this->t('The entity id configuration is @uuids', array('@uuids' => $uuids));
   }
 
   /**
    * {@inheritdoc}
    */
   public function evaluate() {
-    if (empty($this->configuration['uuid'])) {
+    if (empty($this->configuration['uuids'])) {
       // Pass through if no configuration found.
       return TRUE;
     }
@@ -86,7 +86,7 @@ class UuidCondition extends ConditionPluginBase {
     }
 
     // Return TRUE if the uuid matches any uuid in the block configuration.
-    if (strpos($this->configuration['uuid'], $uuid) !== FALSE) {
+    if (strpos($this->configuration['uuids'], $uuid) !== FALSE) {
       return TRUE;
     }
   }
